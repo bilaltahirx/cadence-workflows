@@ -11,7 +11,7 @@ func init()  {
 
 }
 
-func CreateUserWorkFlow(ctx workflow.Context)  error{
+func CreateUserWorkFlow(ctx workflow.Context, podsRequest string)  error{
 	logger := workflow.GetLogger(ctx)
 
 
@@ -25,7 +25,7 @@ func CreateUserWorkFlow(ctx workflow.Context)  error{
 	ctx = workflow.WithActivityOptions(ctx, ao)
 
 	var resp string
-	if err := workflow.ExecuteActivity(ctx, activites.InsertUserToPg, "podsRequest").Get(ctx, &resp); err != nil {
+	if err := workflow.ExecuteActivity(ctx, activites.InsertUserToPg, podsRequest).Get(ctx, &resp); err != nil {
 		//Message not published on nats if error occurs
 		logger.Error(err.Error())
 		return err
